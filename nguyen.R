@@ -39,7 +39,6 @@ sleep <- read.csv("./data/sleepdata.csv", sep = ";") %>%
          quality,
          steps) %>%
   filter(duration != 0) 
-sleep
 
 
 
@@ -47,8 +46,8 @@ sleep
 
 sleep %>%
   ggplot(aes(x = date, y = duration, colour = quality)) +
-  geom_point(alpha = 0.8) + 
-  geom_smooth(span = 0.1) +
+  geom_point(alpha = 0.6) + 
+  geom_smooth(span = 0.1, colour = "purple") +
   scale_colour_viridis() +
   labs(x = "Date",
        y = "Duration (hours)",
@@ -56,7 +55,7 @@ sleep %>%
        caption = "Data recorded with Sleep Cycle",
        colour = "Sleep Quality\n") +
   scale_y_continuous(breaks = seq(0, 14, by = 2)) +
-  theme_minimal()
+  theme_bw()
 
 
 
@@ -69,7 +68,8 @@ sleep %>%
   scale_y_continuous(expand = c(0,0),
                      breaks = seq(0,24,4),
                      limits = c(0,24.1),
-                     labels = c("12 AM","4 AM","8 AM", "12 PM", "4 PM","8 PM","11:59 PM")) +
+                     labels = c("12 AM", "4 AM", "8 AM", "12 PM", "4 PM", 
+                                "8 PM", "11:59 PM")) +
   labs(x = "Date",
        y = "Bedtime",
        title = "Bedtime and Sleep Quality",
@@ -126,7 +126,8 @@ sleep %>%
        title = "Number of Steps Each Day of the Week",
        caption = "Data recorded in Sleep Cycle") +
   theme_ridges(font_size = 13, grid = TRUE) + 
-  theme(axis.title.y = element_blank())
+  theme(axis.title.y = element_blank(),
+        legend.position = "none")
 
 
 
@@ -161,3 +162,4 @@ sleep %>%
   theme_ridges(font_size = 13, grid = TRUE) + 
   theme(axis.title.y = element_blank(),
         legend.position = "none")
+
