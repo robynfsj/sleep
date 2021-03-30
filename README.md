@@ -9,7 +9,7 @@ for my Code First Girls Python project. There are two scripts:
 [nguyen.R](https://github.com/robynfsj/sleep/blob/master/nguyen.R) – a script modified from Nguyen (2018), which I 
 decided to use as it contained some interesting visualisations and packages I have not used before such as ggridges  
 
-[sleep-cycle.R](https://github.com/robynfsj/sleep/blob/master/sleep-cycle.R) – all my code where I have tryed to 
+[sleep-cycle.R](https://github.com/robynfsj/sleep/blob/master/sleep-cycle.R) – all my own code where I have tryed to 
 recreate something similar to the visualisations in the Sleep Cycle app itself  
 
 ## Example Visualisations
