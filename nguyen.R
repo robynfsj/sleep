@@ -14,7 +14,7 @@ library(ggridges)
 
 # Read and clean data -----------------------------------------------------
 
-sleep <- read.csv("./data/sleepdata.csv", sep = ";") %>%
+sleep <- read.csv("./data/sleepdata.csv", sep = ",") %>%
   as_tibble() %>%
   rename(start = Start,
          end = End,
@@ -28,7 +28,7 @@ sleep <- read.csv("./data/sleepdata.csv", sep = ";") %>%
          bedtime = hour(start) + minute(start) / 60,
          rise = hour(end) + minute(end) / 60,
          quality = as.numeric(str_replace(quality, "\\%", "")),
-         duration = time_length(as.duration(hm(duration)) / 3600)) %>%
+         duration = dseconds(duration) / 3600) %>%
   select(date,
          day,
          weekend,
@@ -50,7 +50,7 @@ sleep %>%
   scale_colour_viridis() +
   labs(x = "Date",
        y = "Duration (hours)",
-       title = "Sleep Duration",
+       title = "Sleep Duration and Quality",
        caption = "Data recorded with Sleep Cycle",
        colour = "Sleep Quality\n") +
   scale_y_continuous(breaks = seq(0, 14, by = 2)) +
@@ -135,10 +135,11 @@ sleep %>%
 sleep %>% 
   ggplot(aes(x = duration, y = day, fill = ..x..)) +
   geom_density_ridges_gradient(scale = 3) +
-  scale_x_continuous(expand = c(0.01, 0), breaks = seq(0, 14, 2)) +
+  scale_x_continuous(expand = c(0.01, 0),
+                     breaks = seq(0, 14, 2)) +
   scale_y_discrete(expand = c(0.01, 0)) +
   scale_fill_viridis(name = "Duration\n", option = "viridis") +
-  labs(x = "Duration",
+  labs(x = "Duration (hours)",
        title = "Sleep Duration by Day of the Week",
        caption = "Data recorded in Sleep Cycle") +
   theme_ridges(font_size = 13, grid = TRUE) + 
