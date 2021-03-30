@@ -5,7 +5,6 @@
 
 # Set up ------------------------------------------------------------------
 
-rm(list = ls())
 library(tidyverse)
 library(lubridate)
 library(viridis)
@@ -19,9 +18,9 @@ sleep <- read.csv("./data/sleepdata.csv", sep = ";") %>%
   as_tibble() %>%
   rename(start = Start,
          end = End,
-         quality = Sleep.quality,
-         duration = Time.in.bed,
-         steps = Activity..steps.) %>%
+         quality = Sleep.Quality,
+         duration = Time.asleep..seconds.,
+         steps = Steps) %>%
   mutate(date = as_date(ymd_hms(end)) - 1,
          day = wday(date, label = TRUE),
          weekend = ifelse(grepl("Sat|Sun", day),"Weekend","Weekday") %>%
