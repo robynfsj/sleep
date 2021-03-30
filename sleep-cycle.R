@@ -42,12 +42,13 @@ duration_7 <- sleep %>%
   ggplot(aes(x = date, y = duration)) +
   geom_line(size = 1, colour = "cadetblue2") + 
   geom_point(shape = 16, size = 3, colour = "cadetblue2") +
-  labs(x = "Date",
+  labs(x = "",
        y = "Duration (hours)",
        title = "Sleep Duration",
        caption = "Data recorded with Sleep Cycle",
        colour = "Sleep Quality\n") +
   scale_y_continuous(breaks = breaks_extended(4)) +
+  scale_x_date(date_breaks = "1 day", date_labels = "%b %d") +
   theme_solarized_2(light = FALSE)
 
 # Quality
@@ -56,11 +57,13 @@ quality_7 <- sleep %>%
   ggplot(aes(x = date, y = quality)) +
   geom_line(size = 1, colour = "cadetblue2") + 
   geom_point(shape = 16, size = 3, colour = "cadetblue2") +
-  labs(x = "Date",
+  labs(x = "",
        y = "Quality (%)",
        title = "Sleep Quality",
        caption = "Data recorded with Sleep Cycle") +
-  scale_y_continuous(breaks = breaks_extended(3)) +
+  scale_y_continuous(limits = c(0, 100),
+                     breaks = seq(0, 100, 25)) +
+  scale_x_date(date_breaks = "1 day", date_labels = "%b %d") +
   theme_solarized_2(light = FALSE)
 
 # Bedtime
@@ -69,11 +72,12 @@ bedtime_7 <- sleep %>%
   ggplot(aes(x = date, y = bedtime - 24 * (bedtime > 12))) +
   geom_line(size = 1, colour = "cadetblue2") + 
   geom_point(shape = 16, size = 3, colour = "cadetblue2") +
-  labs(x = "Date",
+  labs(x = "",
        y = "Bedtime",
        title = "Bedtime",
        caption = "Data recorded with Sleep Cycle") +
   scale_y_continuous(breaks = breaks_extended(3)) +
+  scale_x_date(date_breaks = "1 day", date_labels = "%b %d") +
   theme_solarized_2(light = FALSE)
 
 # Plot together
@@ -99,11 +103,11 @@ duration_30 <-  sleep %>%
               size = 1,
               colour = "cadetblue2",
               se = FALSE) +
-  labs(x = "Date",
+  labs(x = "",
        y = "Duration (hours)",
        title = "Sleep Duration",
        caption = "Data recorded with Sleep Cycle") +
-  scale_y_continuous(breaks = seq(0,14,2)) +
+  scale_y_continuous(breaks = seq(0, 14, 2)) +
   theme_solarized_2(light = FALSE)
 
 # Quality
@@ -119,7 +123,7 @@ quality_30 <-  sleep %>%
               size = 1,
               colour = "cadetblue2",
               se = FALSE) +
-  labs(x = "Date",
+  labs(x = "",
        y = "Quality (%)",
        title = "Sleep Quality",
        caption = "Data recorded with Sleep Cycle") +
@@ -139,7 +143,7 @@ bedtime_30 <- sleep %>%
               size = 1,
               colour = "cadetblue2",
               se = FALSE) +
-  labs(x = "Date",
+  labs(x = "",
        y = "Bedtime",
        title = "Bedtime",
        caption = "Data recorded with Sleep Cycle") +
@@ -156,7 +160,7 @@ plot_grid(duration_30, quality_30, bedtime_30,
 
 
 
-# Long term data ---------------------------------------------------------
+# Long term sleep duration data ------------------------------------------
 
 # Sleep duration - all data
 sleep %>%
@@ -178,7 +182,8 @@ sleep %>%
   scale_y_continuous(expand = c(0,0),
                      limits = c(0, 14),
                      breaks = seq(0, 14, 2)) +
-  scale_x_continuous(expand = c(0,0)) +
+  scale_x_date(expand = c(0,0),
+               date_breaks = "4 months", date_labels = "%b %y") +
   theme_solarized_2(light = FALSE)
 
 # Sleep duration - 2020
@@ -264,6 +269,41 @@ plot_grid(duration_2020, duration_2019,
 
 plot_grid(duration_2020, duration_2019, duration_2018,
           nrow = 3,
+          align = "v"
+)
+
+duration_2020
+
+
+# Long term sleep quality data --------------------------------------------
+
+quality_2020 <- sleep %>%
+  filter(date >= as.Date("2020-01-01") & date <= as.Date("2021-01-01"))  %>%
+  ggplot(aes(x = date, y = quality)) +
+  geom_line(size = 0.2, colour = "lightsteelblue1") + 
+  stat_smooth(geom = "area", 
+              span = 0.4, 
+              alpha = 0.2,
+              fill = "lightsteelblue3") +
+  geom_smooth(span = 0.4,
+              size = 1,
+              colour = "cadetblue2",
+              se = FALSE) +
+  labs(x = "2020",
+       y = "Duration (hours)",
+       title = "Sleep Quality 2020",
+       caption = "Data recorded with Sleep Cycle",
+       colour = "Sleep Quality\n") +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 105),
+                     breaks = seq(0, 100, 25)) +
+  scale_x_date(expand = c(0,0),
+               date_breaks = "1 month", date_labels = "%b") +
+  theme_solarized_2(light = FALSE)
+
+# Plot together
+plot_grid(duration_2020, quality_2020,
+          nrow = 2,
           align = "v"
 )
 
