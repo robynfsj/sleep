@@ -1,6 +1,6 @@
 # Sleep data visualisations in R
 
-I created this project to practice creating visualisations in R as I need to use R for the analysis of my PhD data but 
+I created this project to practise creating visualisations in R as I need to use R for the analysis of my PhD data but 
 have gotten used to using Python recently.   
 
 The project is an analysis of my sleep data from the [Sleep Cycle app](https://www.sleepcycle.com), which I also used 
